@@ -1,177 +1,413 @@
 # Customer Churn Prediction & Retention Analytics
+### An End-to-End Data Science, Machine Learning & Business Analytics Project
 
-An end-to-end machine learning project focused on customer churn analysis, predictive modeling, and data-driven customer retention insights in the banking sector.
+**Author:** Nematullah Amiri | PMP® | MBA  
+**Project Domain:** Banking Analytics | Customer Intelligence | Predictive Modeling  
+**Primary Tools:** Python, Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn, SciPy
 
-## Project Overview
+---
 
-Customer churn is an important business challenge for financial institutions because customer attrition can affect recurring revenue, customer relationships, and long-term business performance.
+## 1. Project Overview
 
-This project applies exploratory data analysis (EDA) and machine learning classification techniques to historical banking customer data to investigate churn patterns and estimate the likelihood of customer attrition.
+Customer attrition is a significant challenge for banking institutions, affecting recurring revenue, customer lifetime value (CLV), customer relationships, and long-term profitability.
 
-The project demonstrates how predictive analytics can help organizations identify potential churn risks, understand customer behavior, and support evidence-based retention strategies.
+This project applies an end-to-end data science methodology to analyze customer churn, identify its underlying drivers, predict customers at risk of leaving, and develop targeted retention strategies.
 
-## Business Problem
+Using a dataset of 10,000 banking customers, the analysis combines descriptive, diagnostic, predictive, and prescriptive analytics to transform customer data into actionable business insights.
 
-Financial institutions need to understand which customers are more likely to discontinue their banking relationships.
+A Random Forest classification model is developed to estimate customer churn probabilities, while statistical analysis and customer segmentation support the identification of high-risk customer groups and the prioritization of retention interventions.
 
-Without analytical insights, customer retention activities may be reactive rather than data-driven.
+The project demonstrates how data science and machine learning can support evidence-based customer relationship management and strategic retention planning in the banking sector.
 
-This project addresses the following questions:
+## 2. Business Problem
 
-- What customer characteristics are associated with churn?
-- Which customer segments demonstrate higher attrition patterns?
-- How effectively can machine learning identify customers who have exited?
-- What are the limitations of the predictive model?
-- How can predictive insights support customer retention strategies?
+Customer churn directly affects a bank's ability to maintain its customer base and generate sustainable revenue.
 
-## Dataset Description
+However, applying the same retention strategy to every customer is inefficient and can result in unnecessary marketing expenditure.
 
-The analysis uses a banking customer dataset with the following characteristics:
+The central business problem addressed in this project is:
 
-| Attribute | Description |
+**How can a bank identify customers who are likely to leave, understand the factors influencing their decisions, and prioritize cost-effective retention interventions?**
+
+### Business Goal
+
+The primary business objective is to develop an analytical framework that supports a targeted reduction in customer churn by 20% over two quarters (six months), while optimizing retention marketing expenditure.
+
+### Project Objectives
+
+- Measure the overall customer churn rate and identify customer segments with elevated attrition.
+- Examine demographic, financial, geographic, and behavioral characteristics associated with churn.
+- Apply statistical hypothesis testing to investigate differences between churned and retained customers.
+- Develop a machine learning model to estimate customer churn probabilities.
+- Segment customers according to predicted churn risk.
+- Develop value-based retention recommendations and resource allocation strategies.
+- Establish a framework for monitoring retention interventions and evaluating business outcomes.
+
+## 3. Dataset Description
+
+The analysis uses the `Churn_Modelling.csv` dataset, containing 10,000 customer records.
+
+The target variable is `Exited`, which indicates whether a customer has left the bank.
+
+| Dataset characteristic | Description |
 |---|---|
 | Total observations | 10,000 |
-| Target variable | `Exited` |
-| Churn rate | 20.37% |
-| Non-churn rate | 79.63% |
-| Problem type | Binary classification |
+| Target variable | Exited |
+| Target classes | 0 = Retained, 1 = Churned |
+| Overall churn rate | Approximately 20.4% |
+| Data format | CSV |
+| Missing values | None reported in the notebook |
 
-**Target variable interpretation:**
-- `1`: Customer exited.
-- `0`: Customer remained.
+### Key Variables
 
-The observation period and currency units are not established by the available dataset documentation and are therefore not assumed.
+| Variable | Description |
+|---|---|
+| CreditScore | Customer credit score |
+| Geography | Customer geographic location |
+| Gender | Customer gender |
+| Age | Customer age |
+| Tenure | Years of customer relationship |
+| Balance | Customer account balance |
+| NumOfProducts | Number of banking products |
+| HasCrCard | Credit card ownership indicator |
+| IsActiveMember | Customer activity status |
+| EstimatedSalary | Estimated customer salary |
+| Exited | Customer churn indicator (target) |
 
-**Dataset source:** Add the original dataset source and attribution here.
+The notebook also creates an `Age_Group` variable to support demographic segmentation.
 
-## Analytical Methodology
+**Dataset availability:** The notebook expects `Churn_Modelling.csv` to be uploaded into the Google Colab environment. The dataset is not embedded in the notebook. Its original publisher, source URL, and redistribution license must be documented separately before public release.
 
-The project follows a structured data science workflow:
+## 4. Analytical Methodology
 
-1. **Business Understanding:** Define the customer churn problem and its business relevance.
-2. **Data Understanding:** Examine dataset structure, variables, data quality, and target distribution.
-3. **Exploratory Data Analysis:** Investigate customer characteristics and patterns associated with churn.
-4. **Data Preparation:** Prepare modeling features and target variables.
-5. **Model Development:** Train and evaluate classification models.
-6. **Model Evaluation:** Assess predictive performance using classification metrics.
-7. **Business Interpretation:** Interpret model performance and discuss potential applications for customer retention.
+The project follows a four-stage analytical framework.
 
-## Model Evaluation
+### 4.1 Descriptive Analytics – What Is Happening?
 
-The reproduced Random Forest evaluation used a stratified 80/20 training and testing split.
+The first stage examines the overall customer base and establishes a baseline understanding of customer attrition.
 
-### Model Performance
+Key analytical activities include:
 
-| Evaluation Metric | Result |
+- Customer churn distribution.
+- Churn rate by geography.
+- Age distribution of retained and churned customers.
+- Churn rate by customer age groups.
+- Account balance comparisons.
+- Customer tenure analysis.
+- Credit score distribution.
+- Gender-based churn comparisons.
+- Customer activity and product usage analysis.
+
+Visualizations are developed using Matplotlib and Seaborn to identify patterns and differences across customer segments.
+
+### 4.2 Diagnostic Analytics – Why Are Customers Leaving?
+
+The second stage investigates the factors associated with customer attrition.
+
+The analysis uses statistical hypothesis testing and segmentation techniques.
+
+**Numerical analysis:**
+- Independent-samples t-tests.
+- Comparison of feature means between churned and retained customers.
+- Correlation analysis.
+
+**Categorical analysis:**
+- Chi-square tests of independence.
+- Churn rate comparisons by geography, gender, age group, and activity status.
+- Customer segment analysis.
+
+**Key findings from the notebook:**
+
+| Customer segment / characteristic | Observed churn rate |
 |---|---:|
-| Accuracy | 86.45% |
-| ROC-AUC | 85.26% |
-| Precision (Churn Class) | 78.33% |
-| Recall (Churn Class) | 46.19% |
-| F1-Score (Churn Class) | 58.11% |
+| Overall customer base | 20.4% |
+| Germany | 32.4% |
+| Age group 51–60 | 56.2% |
+| Inactive members | 26.9% |
+| Active members | 14.3% |
+| Female customers | 25.1% |
+| Male customers | 16.5% |
+| Customers with four products | 100% |
 
-*These are reproduced evaluation results and should be verified against the final notebook before being treated as definitive.*
+The four-product segment contains only 60 customers, so this extreme result should be investigated further before drawing broader conclusions.
 
-### Performance Interpretation
+The notebook also identifies statistically significant differences in customer age, account balance, and credit score between churned and retained customers.
 
-The model demonstrates an ability to distinguish between customers who exited and those who remained, achieving a ROC-AUC of 85.26%.
+These findings help identify customer segments that may require additional investigation and targeted retention interventions.
 
-However, churn recall is 46.19%, indicating that the model identifies fewer than half of the actual churn cases in the test dataset.
+### 4.3 Predictive Analytics – Who Is Likely to Churn?
 
-This highlights an important consideration in customer churn prediction: overall accuracy does not necessarily reflect a model's ability to identify the customers who matter most to a retention strategy.
+The third stage develops a machine learning classification model to estimate the probability of customer attrition.
 
-Further investigation of classification thresholds, precision-recall trade-offs, and alternative modeling approaches may improve churn identification.
+**Selected algorithm: Random Forest Classifier**
 
-## Business Insights & Potential Applications
+The model is configured with 100 decision trees and a fixed random state of 42.
 
-The analytical results can support several customer retention activities:
+#### Model Development Process
 
-- **Customer Risk Identification:** Prioritize customers with higher predicted churn probabilities for further assessment.
-- **Customer Segmentation:** Investigate characteristics and behavioral patterns associated with customer attrition.
-- **Retention Planning:** Help customer relationship teams prioritize potential retention activities.
-- **Decision Support:** Use predictive insights alongside customer value, intervention costs, and business knowledge.
+1. Separate the predictor variables from the target variable.
+2. Remove non-predictive identifiers: `RowNumber`, `CustomerId`, and `Surname`.
+3. Apply one-hot encoding to categorical variables.
+4. Split the dataset into training and testing subsets.
+5. Use an 80:20 stratified train-test split.
+6. Train the Random Forest classifier.
+7. Generate class predictions and churn probabilities.
+8. Evaluate model performance using classification metrics.
+9. Examine feature importance and customer risk segmentation.
 
-These are potential applications of the analytical approach, not proven outcomes of a retention intervention.
+#### Model Performance
 
-## Project Limitations
+The following results are taken from the executed predictive analytics pipeline in the notebook.
 
-- Predictive performance does not establish the causes of customer churn.
-- The dataset does not establish the observation window or currency units used for its financial variables.
-- Model performance may change across customer populations and business environments.
-- The results depend on the data preparation, feature selection, and evaluation procedures.
-- Customer lifetime value, retention costs, and intervention effectiveness have not been established.
-- The model requires further validation before operational deployment.
+| Evaluation metric | Test-set result |
+|---|---:|
+| Accuracy | 85.8% |
+| ROC-AUC | 84.4% |
+| Precision (Churned) | 75.5% |
+| Recall (Churned) | 44.7% |
+| F1-score (Churned) | 56.2% |
 
-## Technology Stack
+**Performance interpretation**
 
-- **Programming:** Python
-- **Data Analysis:** Pandas, NumPy
-- **Machine Learning:** Scikit-learn
-- **Data Visualization:** Matplotlib, Seaborn
-- **Development Environment:** Jupyter Notebook
+- Accuracy of 85.8% indicates that the model correctly classifies approximately 85.8% of test observations.
+- ROC-AUC of 84.4% indicates useful discrimination between customers who churn and those who remain.
+- Precision of 75.5% indicates that approximately three-quarters of customers predicted to churn actually churned in the test set.
+- Recall of 44.7% indicates that the model identifies approximately 44.7% of actual churners.
+- The F1-score of 56.2% reflects the balance between precision and recall.
 
-## Repository Structure
+The recall result indicates an opportunity for further model optimization, particularly where missing potential churners carries a significant business cost.
 
-Update this structure to match the actual files in your repository.
+#### Customer Risk Segmentation
+
+The notebook applies probability thresholds to classify customers into three risk categories.
+
+| Risk category | Probability threshold | Customers | Share |
+|---|---|---:|---:|
+| High Risk | Greater than 70% | 1,387 | 13.9% |
+| Medium Risk | 30%–70% | 750 | 7.5% |
+| Low Risk | Below 30% | 7,863 | 78.6% |
+| **Total** | | **10,000** | **100%** |
+
+These are exploratory full-dataset risk segments generated using the fitted model. They are not independent out-of-sample estimates, because the model was also trained on 80% of these observations.
+
+### 4.4 Prescriptive Analytics – What Should the Bank Do?
+
+The final analytical stage translates churn predictions into practical customer retention recommendations.
+
+The notebook introduces a simple estimated customer lifetime value proxy:
+
+`Estimated_CLV = Balance + (EstimatedSalary × 0.1)`
+
+This is an illustrative customer-value proxy, not a validated financial CLV model.
+
+Customer churn probabilities and estimated customer values are then used to prioritize retention interventions.
+
+#### Recommended Retention Actions
+
+| Risk category | Customer value | Recommended intervention |
+|---|---|---|
+| High risk | High value | Immediate personal retention call |
+| High risk | Lower value | Targeted email campaign |
+| Medium risk | High value | Personalized retention offer |
+| Medium risk | Lower value | SMS reminder |
+| Low risk | Any value | Routine monitoring |
+
+The executed customer segmentation produces the following action groups:
+
+| Action category | Customers |
+|---|---:|
+| Immediate retention calls | 1,061 |
+| Email campaigns | 326 |
+| Personalized offers | 562 |
+| Routine monitoring | 8,051 |
+| **Total** | **10,000** |
+
+These recommendations illustrate how a bank could allocate retention resources according to customer risk and estimated value.
+
+The notebook also explores:
+- Personalized customer retention offers.
+- Retention team resource allocation.
+- Campaign budgeting.
+- A seven-day retention campaign timeline.
+- A proposed A/B testing framework.
+- Expected business impact calculations.
+
+The campaign outcomes and ROI estimates are scenario-based assumptions, not measured results from an executed retention campaign.
+
+## 5. Key Business Insights
+
+The analysis highlights several areas requiring managerial attention.
+
+**1. Geographic differences**
+
+Germany has a churn rate of 32.4%, substantially higher than the overall rate of 20.4%. Further investigation into local market conditions, customer experience, pricing, and competitive pressures is recommended.
+
+**2. Age-related customer attrition**
+
+The 51–60 age group exhibits a churn rate of 56.2%. This suggests a need to examine the financial products, service expectations, and retention requirements of older customers.
+
+**3. Customer engagement**
+
+Inactive members have a churn rate of 26.9%, compared with 14.3% among active members. Customer engagement and reactivation initiatives should therefore be considered important retention priorities.
+
+**4. Product portfolio concerns**
+
+Customers holding four products exhibit 100% churn in this dataset, although the segment contains only 60 observations. This warrants a detailed investigation of product suitability, bundling, and customer experience.
+
+**5. Gender-related differences**
+
+Female customers exhibit a higher observed churn rate than male customers. Further investigation should determine whether this difference reflects customer experience, product suitability, or other underlying factors.
+
+## 6. Technology Stack
+
+| Technology | Application |
+|---|---|
+| Python | Core programming language |
+| Pandas | Data manipulation and analysis |
+| NumPy | Numerical computation |
+| Matplotlib | Data visualization |
+| Seaborn | Statistical visualization |
+| SciPy | Statistical hypothesis testing |
+| Scikit-learn | Machine learning and model evaluation |
+| Jupyter Notebook / Google Colab | Interactive analytical environment |
+| Tabulate | Analytical reporting and tabular presentation |
+
+## 7. Project Workflow
+
+The overall analytical workflow can be summarized as follows:
 
 ```text
-customer-churn-prediction/
+Business Understanding
+        |
+        v
+Data Collection & Loading
+        |
+        v
+Data Understanding
+        |
+        v
+Descriptive Analytics
+        |
+        v
+Diagnostic Analytics
+        |
+        v
+Data Preparation
+        |
+        v
+Random Forest Model Development
+        |
+        v
+Model Evaluation
+        |
+        v
+Customer Risk Segmentation
+        |
+        v
+Prescriptive Analytics
+        |
+        v
+Retention Recommendations
+        |
+        v
+Business Decision Support
+```
+
+## 8. Repository Structure
+
+The project repository contains the analytical notebook and supporting project files.
+
+```text
+customer-churn-prediction-and-Analysis/
 │
 ├── README.md
 ├── requirements.txt
+├── Requirements.txt
+├── Bank_Customer_Churn_Analysis.ipynb
+├── app.py
+├── customer_churn_model.pkl
 │
-├── notebooks/
-│   └── customer_churn_analysis.ipynb
-│
-├── app/
-│   └── app.py
-│
-├── images/
-│   ├── churn_distribution.png
-│   ├── confusion_matrix.png
-│   ├── roc_curve.png
-│   └── feature_importance.png
-│
-└── .gitignore
+└── .devcontainer/
 ```
 
-## Installation & Usage
+The dataset is not included in the notebook and must be supplied separately.
 
-### 1. Clone the repository
+As the repository evolves, analytical notebooks, application code, trained models, visualizations, and documentation can be organized into dedicated directories.
+
+## 9. Installation and Execution
+
+### Prerequisites
+
+- Python 3.9 or later.
+- Jupyter Notebook or Google Colab.
+- Required Python libraries.
+- The `Churn_Modelling.csv` dataset.
+
+### Install dependencies
 
 ```bash
-git clone https://github.com/NematullahAmiri/Customer-Churn-Analysis.git
+pip install pandas numpy matplotlib seaborn scipy scikit-learn tabulate jupyter
 ```
 
-### 2. Navigate to the project directory
+### Run using Google Colab
 
-```bash
-cd Customer-Churn-Analysis
-```
+1. Open the Jupyter Notebook in Google Colab.
+2. Upload `Churn_Modelling.csv` when prompted.
+3. Execute the notebook cells sequentially.
+4. Review the descriptive and diagnostic analysis.
+5. Examine the Random Forest model evaluation.
+6. Review the customer segmentation and retention recommendations.
 
-### 3. Install dependencies
+**Note:** The notebook uses Google Colab's file-upload functionality. If running locally, the dataset-loading section should be adapted to the local file path.
 
-```bash
-pip install -r requirements.txt
-```
+## 10. Limitations and Future Improvements
 
-### 4. Open the analysis notebook
+Although the project provides a structured analytical framework, several improvements are recommended before operational deployment.
 
-Open the Jupyter Notebook in your preferred environment and execute the notebook cells in sequence.
+**Model performance**
+- Improve churn recall through class-weighting, threshold optimization, and additional model comparisons.
+- Compare Random Forest with Logistic Regression, Gradient Boosting, and XGBoost.
+- Evaluate the model using cross-validation.
+- Examine precision-recall curves and threshold-specific business costs.
 
-Ensure that the original dataset is available at the location specified in the notebook.
+**Model validation**
+- Generate risk scores on unseen customers rather than relying on in-sample predictions.
+- Separate model training, evaluation, and operational scoring datasets.
+- Validate probability calibration and monitor model performance over time.
 
-## Project Links
+**Business analytics**
+- Validate the estimated customer lifetime value methodology.
+- Test retention interventions through controlled experiments.
+- Measure actual retention lift, campaign costs, and realized ROI.
+- Investigate the small four-product customer segment before making strategic decisions.
 
-- **GitHub Repository:** https://github.com/NematullahAmiri/Customer-Churn-Analysis
-- **Professional Portfolio:** https://nematullahamiri.github.io/
+**Deployment**
+- Develop a reproducible prediction pipeline.
+- Integrate the model into an interactive application or banking analytics environment.
+- Establish periodic model monitoring and performance reporting.
 
-## Author
+## 11. Conclusion
 
-**Nematullah Amiri**
+This project demonstrates how descriptive, diagnostic, predictive, and prescriptive analytics can be integrated into a practical customer retention framework.
 
-Data Science | Business Intelligence | Project Analytics
+By combining statistical analysis, machine learning, customer segmentation, and business recommendations, the project moves beyond identifying historical churn patterns toward supporting proactive retention decisions.
 
-## Disclaimer
+The Random Forest model achieves 85.8% accuracy and an ROC-AUC of 84.4% on the test dataset, providing a useful foundation for further development.
 
-This project is intended for educational and analytical demonstration. Model predictions represent estimated patterns based on historical data and should not be interpreted as verified causes of customer churn or guaranteed outcomes of retention strategies.
+More importantly, the analytical framework demonstrates how banking institutions can use customer data to identify risk patterns, prioritize retention activities, and improve the allocation of customer relationship management resources.
+
+The next stage is to improve model recall, validate customer risk probabilities on unseen data, and evaluate the actual effectiveness of proposed retention interventions.
+
+---
+
+## 12. Author
+
+**Nematullah Amiri | PMP® | MBA**
+
+Data Science | Business Intelligence | Project Analytics | Development Research
+
+- **GitHub:** https://github.com/NematullahAmiri
+- **Portfolio:** https://nematullahamiri.github.io/
+- **LinkedIn:** Add your LinkedIn profile URL here.
+
+*This project is developed for data science, machine learning, banking analytics, and business decision-support portfolio purposes.*
